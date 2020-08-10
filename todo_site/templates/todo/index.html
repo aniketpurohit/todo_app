@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="row mt-4">
+        <div class="col">
+            <h2>Add Item</h2>
+                <form action="add_todo/" method="post" class="form-inline">
+
+                    <input type="text" name="content" class="form-control mb-2 mr-sm-2" placeholder="Add Item">
+                    <button type="submit" class="btn btn-outline-primary mb-2">Submit</button>
+                </form>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col">
+            <ul class="list-group">
+                {% for todo_item in todo_items %}
+                      <li class="list-group-item active bg-light text-primary">
+                      <input type="checkbox" aria-label="Checkbox for following text input">
+                        {{ todo_item.text }}
+                          <div class="float-right">
+                              <form action="delete_todo/{{todo_item.id}}/" method="post">
+                                  <a id="the-thing-that-opens-your-alert" href="#">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="ConfirmDelete()">Delete</button>
+                                  </a>
+                              </form>
+                          </div>
+
+                      </li>
+                {% endfor %}
+                </ul>
+        </div>
+
+    </div>
+<div id="le-alert" class="alert alert-warn alert-block fade">
+  <button href="#" type="button" class="close">&times;</button>
+  <h4>delete <Something></Something></h4>
+  <p>Roses are red, violets are blue...</p>
+</div>
+<script>
+    $(function() {
+    var test = localStorage.input === 'true' ? true : false;
+    $('input').prop('checked', test || false);
+    });
+
+    $('input').on('change', function() {
+    localStorage.input = $(this).is(':checked');
+    console.log($(this).is(':checked'));
+    });
+
+    $('#the-thing-that-opens-your-alert').click(function () {
+    $('#le-alert').addClass('in'); // shows alert with Bootstrap CSS3 implem
+    });
+
+    $('.close').click(function () {
+    $(this).parent().removeClass('in'); // hides alert with Bootstrap CSS3 implem
+    });
+
+</script>
+
+
+{% endblock content %}
